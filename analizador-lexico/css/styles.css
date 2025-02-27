@@ -1,0 +1,80 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1c525f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+    background-color: #1f4757;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para el título */
+  h1 {
+    font-size: 2rem;
+    color: #5a95b8;
+  }
+  
+  /* Área de texto */
+  textarea {
+    width: 100%;
+    height: 300px;
+    padding: 10px;
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    resize: none;
+  }
+  
+  /* Estilos para los botones */
+  .buttons {
+    margin-top: 20px;
+  }
+  
+  .btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn:active {
+    background-color: #004085;
+  }
+  
+  /* Estilo para la salida de resultados */
+  pre {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 4px;
+    margin-top: 30px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
