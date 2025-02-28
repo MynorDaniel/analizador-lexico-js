@@ -17,22 +17,24 @@ export class Automata {
     };
   }
 
-    analizarTexto(texto) { // d
+    analizarTexto(texto) { // 1.1
         const tokens = [];
         let lineaActual = 1;
         let columnaActual = 1;
-        let estado = 'q0'; // q0
-        let sb = new StringBuilder(); // 
+        let estado = 'q0'; // q3
+        let sb = new StringBuilder(); // 1.
         let nuevoToken = false;
+        let decimal = false;
 
-        for (let i = 0; i <= texto.length; i++) { // 0
+        for (let i = 0; i <= texto.length; i++) { // 3
 
+            // Pasar al caracter anterior en q0
             if(nuevoToken){
                 i--;
                 nuevoToken = false;
             }
 
-            const char = texto[i]; // d
+            const char = texto[i]; // 
 
             // Salto de linea
             if (char === '\n') {
@@ -44,7 +46,10 @@ export class Automata {
 
             if(estado == 'q0'){
                 if(this.esLetra(char)){
-                    estado = 'q1'
+                    estado = 'q1';
+                    sb.append(char);
+                }else if(this.esNumero(char)){
+                    estado = 'q2';
                     sb.append(char);
                 }
             }else if(estado == 'q1'){
@@ -56,6 +61,34 @@ export class Automata {
                     nuevoToken = true;
                 }else{
                     sb.append(char);
+                }
+            }else if(estado == 'q2'){
+                if(char === '.'){
+                    estado = 'q3';
+                    sb.append(char);
+                }else if(!(this.esNumero(char))){
+                    tokens.push(new Token(sb.toString(), this.TokenTypes.NUMERO, lineaActual, columnaActual))
+                    sb.clear();
+                    estado = 'q0';
+                    columnaActual++;
+                    nuevoToken = true;
+                }else {
+                    sb.append(char);
+                }
+            }else if(estado == 'q3'){
+                
+                if(!(this.esNumero(char))){
+                    if(decimal){
+                        tokens.push(new Token(sb.toString(), this.TokenTypes.DECIMAL, lineaActual, columnaActual))
+                        sb.clear();
+                        estado = 'q0';
+                        columnaActual++;
+                        nuevoToken = true;
+                        decimal = false;
+                    }
+                }else{
+                    sb.append(char);
+                    decimal = true;
                 }
             }
 
