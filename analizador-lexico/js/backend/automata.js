@@ -17,22 +17,22 @@ export class Automata {
     };
   }
 
-    analizarTexto(texto) { // var let
+    analizarTexto(texto) { // d
         const tokens = [];
         let lineaActual = 1;
         let columnaActual = 1;
-        let estado = 'q0'; // q1
+        let estado = 'q0'; // q0
         let sb = new StringBuilder(); // 
         let nuevoToken = false;
 
-        for (let i = 0; i < texto.length; i++) { // 4
+        for (let i = 0; i <= texto.length; i++) { // 0
 
             if(nuevoToken){
                 i--;
                 nuevoToken = false;
             }
 
-            const char = texto[i]; // ' '
+            const char = texto[i]; // d
 
             // Salto de linea
             if (char === '\n') {
@@ -51,7 +51,7 @@ export class Automata {
                 if(!(this.esLetra(char) || this.esNumero(char))){
                     tokens.push(new Token(sb.toString(), this.TokenTypes.IDENTIFICADOR, lineaActual, columnaActual))
                     sb.clear();
-                    estado == 'q0';
+                    estado = 'q0';
                     columnaActual++;
                     nuevoToken = true;
                 }else{
@@ -75,11 +75,13 @@ export class Automata {
     }
 
     esLetra(caracter) {
+        if(caracter == undefined){return false}
         let codigo = caracter.charCodeAt(0);
         return (codigo >= 65 && codigo <= 90) || (codigo >= 97 && codigo <= 122);
     }
 
     esNumero(caracter) {
+        if(caracter == undefined){return false}
         let codigo = caracter.charCodeAt(0);
         return codigo >= 48 && codigo <= 57;
     }
