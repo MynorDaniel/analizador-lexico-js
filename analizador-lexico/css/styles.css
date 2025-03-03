@@ -1,13 +1,14 @@
 body {
   font-family: 'Courier New', monospace;
   margin: 0;
-  padding: 0;
+  padding: 50px;
   background-color: #000000;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Cambiado de center a flex-start */
   height: 100vh;
   color: #00FF00;
+  overflow: auto; /* Permite scroll en el body si es necesario */
 }
 
 .container {
@@ -19,6 +20,8 @@ body {
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 0 15px #00FF00; 
+  max-height: 90vh; /* Para limitar la altura del contenedor */
+  overflow-y: auto; /* Permite hacer scroll cuando el contenido sea demasiado largo */
 }
 
 h1 {
@@ -104,4 +107,34 @@ pre {
   color: #00FF00;
   border: 2px solid #00FF00;
   box-shadow: 0 0 10px #00FF00;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  overflow-x: auto; /* Permite scroll horizontal si es necesario */
+}
+
+table th, table td {
+  border: 1px solid #00FF00;
+  padding: 8px;
+  text-align: left;
+  color: #00FF00;
+}
+
+table th {
+  background-color: #005500;
+}
+
+table tr:nth-child(even) {
+  background-color: #003300;
+}
+
+table tr:hover {
+  background-color: #005500;
+}
+
+.error-row {
+  background-color: #550000 !important;
 }

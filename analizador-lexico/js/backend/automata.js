@@ -40,13 +40,9 @@ export class Automata {
 
             const char = texto[i]; // &
 
-            // Salto de linea
-            if (char === '\n') {
-                lineaActual++;
-                columnaActual = 1;
-            }
+            
 
-            //Estados
+            // Estados
             ///////////////////////////////////
             if(estado == 'q0'){
                 if(this.esLetra(char)){
@@ -110,7 +106,7 @@ export class Automata {
                     sb.append(char);
                 }
             ///////////////////////////////////
-            }else if(estado == 'q3'){
+            }else if(estado == 'q3'){ //1. .
                 if(!(this.esNumero(char))){
                     if(decimal){
                         tokens.push(new Token(sb.toString(), this.TokenTypes.DECIMAL, lineaActual, columnaActual))
@@ -119,6 +115,13 @@ export class Automata {
                         columnaActual++;
                         nuevoToken = true;
                         decimal = false;
+                    }else if((typeof char) !== "undefined"){
+                        if(!(this.esEspacio(char))){
+                            errores.push(new Token(sb.toString(), this.TokenTypes.ERROR, lineaActual, columnaActual))
+                            sb.clear();
+                            estado = 'q0';
+                            columnaActual++;
+                        }
                     }
                 }else{
                     sb.append(char);
@@ -139,16 +142,23 @@ export class Automata {
                 columnaActual++;
                 nuevoToken = true;
             ///////////////////////////////////
-            }else if(estado == 'q6'){
+            }else if(estado == 'q6'){ // sb | c undefined
                 if(actualOpLogico === char){
                     tokens.push(new Token(char+char, this.TokenTypes.OPERADOR_LOGICO, lineaActual, columnaActual))
                     sb.clear();
                     estado = 'q0';
                     columnaActual++;
+                    actualOpLogico = '';
+                }else if((typeof char) !== "undefined"){
+                    errores.push(new Token(sb.toString()+char, this.TokenTypes.ERROR, lineaActual, columnaActual))
+                    sb.clear();
+                    estado = 'q0';
+                    columnaActual++;
                 }else{
-                    if(!(char === '\s+')){
-                        errores.push(new Token(sb.toString(), this.TokenTypes.ERROR, lineaActual, columnaActual))
-                    }
+                    errores.push(new Token(sb.toString(), this.TokenTypes.ERROR, lineaActual, columnaActual))
+                    sb.clear();
+                    estado = 'q0';
+                    columnaActual++;
                 }
             ///////////////////////////////////
             }else if(estado == 'q7'){
@@ -172,7 +182,15 @@ export class Automata {
                 columnaActual++;
                 nuevoToken = true;
             }
+
+            // Salto de linea
+            if (char === '\n' && nuevoToken == false) {
+                lineaActual++;
+                columnaActual = 1;
+            }
         }
+
+        
 
         this.imprimirTokens(tokens);
         this.imprimirErrores(errores);
