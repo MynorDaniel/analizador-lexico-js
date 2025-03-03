@@ -9,7 +9,12 @@
 <body>
   <div class="container">
     <h1>Analizador Léxico</h1>
-    <textarea id="text-area" placeholder="Escribe el texto aquí..."></textarea>
+
+    <label for="pattern-input">Búsqueda de patrones:</label>
+    <input type="text" id="pattern-input" placeholder="Patrón...">
+    <button id="search-btn" class="btn">Buscar</button>
+
+    <div id="text-area" class="text-area" contenteditable="true"></div>
 
     <div class="buttons">
       <button id="open-btn" class="btn">Abrir</button>
