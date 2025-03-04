@@ -66,22 +66,34 @@ document.getElementById('open-btn').addEventListener('click', () => {
     const textArea = document.getElementById("text-area");
     const textoOriginal = textArea.innerText;
     
-    const palabraEscapada = palabra.replace(/[.*+?^=!:${}()|\[\]\/\\]/g, '\\$&'); // Escapa los caracteres especiales
-    
-    const regex = new RegExp(`(${palabraEscapada})`, "gi");
-  
     let coincidencias = 0;
-    let resultado;
-    
-    while ((resultado = regex.exec(textoOriginal)) !== null) {
-      coincidencias++;
+    let nuevoHTML = "";
+    let i = 0;
+
+    while (i < textoOriginal.length) {
+        let coincide = true;
+
+        for (let j = 0; j < palabra.length; j++) {
+            if (textoOriginal[i + j]?.toLowerCase() !== palabra[j].toLowerCase()) {
+                coincide = false;
+                break;
+            }
+        }
+
+        if (coincide) {
+            nuevoHTML += `<span style="background-color: red;">${textoOriginal.slice(i, i + palabra.length)}</span>`;
+            coincidencias++;
+            i += palabra.length;
+        } else {
+            nuevoHTML += textoOriginal[i];
+            i++;
+        }
     }
-  
-    const nuevoHTML = textoOriginal.replace(regex, '<span style="background-color: red;">$1</span>');
+
     textArea.innerHTML = nuevoHTML;
-  
     document.getElementById('output').textContent = `Cadena: ${palabra}    Coincidencias: ${coincidencias}`;
-  }
+}
+
   
   
   // Llenar las tablas
